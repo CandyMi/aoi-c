@@ -361,7 +361,7 @@ int32_t aoi_leave(struct Aoi* aoi, struct Unit* unit, struct Units** units, uint
   aoi_node_remove(aoi, node);
   uint32_t quantity = 0;
   if (units)
-    if (radius > 0)
+    if (radius)
       quantity += aoi_node_range(aoi, node, units, *radius);
   node->prevx = NULL; node->nextx = NULL;
   node->prevy = NULL; node->nexty = NULL;
