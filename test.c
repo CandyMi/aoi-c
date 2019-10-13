@@ -181,10 +181,30 @@ void test_move() {
   uint32_t quantity = aoi_move(aoi, u2, 250, 250, &neighbor, &radius);
 
   if (quantity) {
+
     aoi_units_dump(neighbor);
+
+    aoi_units_destory(neighbor);
+
   }
 
   aoi_dump(aoi);
+
+  aoi_leave(aoi, u1, NULL, NULL);
+
+  aoi_unit_destory(u1);
+
+  aoi_leave(aoi, u2, NULL, NULL);
+
+  aoi_unit_destory(u2);
+
+  aoi_leave(aoi, u3, NULL, NULL);
+
+  aoi_unit_destory(u3);
+
+  aoi_dump(aoi);
+
+  aoi_destory(aoi);
 
 }
 
@@ -204,7 +224,7 @@ int main(int argc, char const *argv[]) {
   // test_enter_and_neighbor();
 
   /* 测试移动 */
-  test_move();
+  // test_move();
 
   return 0;
 }
