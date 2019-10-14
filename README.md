@@ -39,7 +39,7 @@
   * 销毁units对象
 
   ```C
-  struct Units* aoi_units_destory(void);
+  void aoi_units_destory(struct Units* units);
   ```
 
   * Aoi进入

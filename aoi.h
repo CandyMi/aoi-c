@@ -122,7 +122,7 @@ struct Unit* aoi_unit_create(int64_t id, uint32_t x, uint32_t y);
 void aoi_unit_destory(struct Unit* unit);
 
 /* 创建Units对象 */
-struct Units* aoi_units_create(void);
+void aoi_units_destory(struct Units* units);
 
 /* 销毁Units对象 */
 void aoi_units_destory(struct Units* units);
