@@ -56,7 +56,7 @@ struct Aoi {
   struct DoubleLink* ylist;
 };
 
-#define aoi_log(fmt, ...) {printf(fmt, ##__VA_ARGS__); fflush(stdin);}
+#define aoi_log(fmt, ...) {printf(fmt, ##__VA_ARGS__); fflush(stdout);}
 
 static inline void aoi_dump(struct Aoi* aoi) {
   aoi_log("********aoi_dump*******\n")
