@@ -312,24 +312,27 @@ static inline void aoi_node_remove_and_insert_y(struct Aoi* aoi, struct DoubleLi
   return;
 }
 
-static inline uint32_t aoi_node_move(struct Aoi* aoi, struct DoubleLink* node, uint32_t to_x, uint32_t to_y, struct Units** units, uint32_t* radius) {
-  uint32_t quantity = 0;
+static inline uint32_t aoi_node_position_difference(uint32_t old_x, uint32_t new_x, uint32_t old_y, uint32_t new_y) {
   uint32_t X = 0;
   uint32_t Y = 0;
-  if (node->x > to_x){
-    X = node->x - to_x;
-  }else{
-    X = to_x - node->x;
-  }
-  if (node->y > to_y) {
-    Y = node->y - to_y;
-  }else{
-    Y = to_y - node->y;
-  }
+  if (old_x > new_x)
+    X = old_x - new_x;
+  else
+    X = new_x - old_x;
+  if (old_y > new_y)
+    Y = old_y - new_y;
+  else
+    Y = new_y - old_y;
+  return X > Y ? X : Y;
+}
+
+static inline uint32_t aoi_node_move(struct Aoi* aoi, struct DoubleLink* node, uint32_t to_x, uint32_t to_y, struct Units** units, uint32_t* radius) {
+  uint32_t quantity = 0;
+  uint32_t old_x = node->x, old_y = node->y;
   aoi_node_remove_and_insert_x(aoi, node, to_x);
   aoi_node_remove_and_insert_y(aoi, node, to_y);
   if (units && radius) {
-    uint32_t offset = X > Y ? (*radius + X) : (*radius + Y);
+    uint32_t offset = *radius + aoi_node_position_difference(old_x, to_x, old_y, to_y);
     quantity += aoi_node_range(aoi, node, units, offset);
   }
   return quantity;
