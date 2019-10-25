@@ -62,6 +62,89 @@
 
   示例参见`test.c`.
 
+## Lua C API
+
+  编译方法可参考`make lua`并自行替换为实际路径与命名
+
+#### 基本函数
+
+```Lua
+local Aoi = require "aoi"
+
+-- 创建aoi对象
+local aoi = Aoi.new_aoi(512, 512)
+
+-- 创建unit对象
+local unit = Aoi.new_unit(1, 100, 200)
+
+-- 获取地图边界值
+print(aoi:get_xy())
+
+-- 获取unit位置
+print(unit:get_xy())
+
+-- 打印Aoi信息
+aoi:dump()
+
+-- 打印unit信息
+unit:dump()
+```
+
+#### 进入、移动、离开
+
+```Lua
+local Aoi = require "aoi"
+
+-- 创建aoi对象
+local aoi = Aoi.new_aoi(512, 512)
+
+-- 创建unit对象
+local u1 = Aoi.new_unit(1, 100, 200)
+local u2 = Aoi.new_unit(2, 150, 200)
+local u3 = Aoi.new_unit(3, 200, 200)
+
+-- 进入
+aoi:enter(u1)
+aoi:enter(u2)
+aoi:enter(u3)
+
+-- 打印进入后的Aoi信息
+aoi:dump()
+
+-- 从当前位置移动到to_x, to_y
+--[[
+  u1(100, 200) ->  u1(50, 200)
+  u2(150, 200) -> u1(100, 200)
+  u3(200, 200) -> u1(150, 200)
+]]
+aoi:move(u1, 50, 200)
+aoi:move(u2, 100, 200)
+aoi:move(u3, 150, 200)
+
+-- 打印移动后的Aoi信息
+aoi:dump()
+
+-- 离开
+aoi:leave(u1)
+aoi:leave(u2)
+aoi:leave(u3)
+
+-- 打印离开后的Aoi信息
+aoi:dump()
+```
+
+#### 关于Lua C API 参数返回值
+
+  `enter`/`move`/`leave`最后都有一个缺省参数(`radius`), 这个参数用来确认开发者是否需要获取以当前坐标点为中心的范围内地玩家列表.
+
+  默认情况下(`radius = 0 或 nil`)仅作进入/移动/离开, 所以这3个方法将不会有返回值. 并且无效的`unitx(x,y)`位置还将会引发一个异常.
+
+  当需要获取的范围单位列表的时候, 开发者需要传递一个有效的radius参数. aoi库将会根据实际情况(参数)进行搜索.
+
+  搜索范围单位列表通常对性能不会很大影响. 但是开发者并没有这个需求的话, 不传递radius会是一个很好的选择.
+
+  需要注意的是: 单位列表通常用来反应进行相关事件操作后需要通知的其它单位. 所以如果在实际生产环境中, 您应该要合理设置一个radius值.
+
 ## 算法复杂度
 
   `aoi_enter` O(n)
