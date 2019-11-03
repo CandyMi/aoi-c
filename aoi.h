@@ -14,7 +14,7 @@
 #include <string.h>
 
 /* 需要定制内存分配器的改这里 */
-#if !defined(allocate) && !defined(allocate)
+#if !defined(allocate) && !defined(release)
   #include <stdlib.h>
   #define release(ptr) free(ptr)
   #define allocate(size) malloc(size)
