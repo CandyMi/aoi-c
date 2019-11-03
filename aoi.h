@@ -14,9 +14,11 @@
 #include <string.h>
 
 /* 需要定制内存分配器的改这里 */
-#include <stdlib.h>
-#define release(p) free(p)
-#define allocate(size) malloc(size)
+#if !defined(allocate) && !defined(allocate)
+  #include <stdlib.h>
+  #define release(ptr) free(ptr)
+  #define allocate(size) malloc(size)
+#endif
 /* 需要定制内存分配器的改这里 */
 
 #ifdef __cplusplus

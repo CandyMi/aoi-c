@@ -1,5 +1,8 @@
 #define LUA_LIB
 
+#define release(ptr) free(ptr)
+#define allocate(size) malloc(size)
+
 #include "aoi.h"
 
 #include "lua.h"
